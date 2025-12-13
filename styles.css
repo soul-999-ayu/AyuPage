@@ -1,0 +1,426 @@
+/* ==========================================================================
+   1. GLOBAL RESET & BASE STYLES
+   ========================================================================== */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    color: white;
+    overflow: hidden; /* Prevents scrollbars */
+}
+
+/* --- The Wallpaper Layer --- */
+.background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-color: #1a1a1a; /* Dark fallback color */
+    z-index: -1;
+    transition: background-image 0.5s ease-in-out; 
+    filter: brightness(0.6); /* Darkens wallpaper so text pops */
+}
+
+
+/* ==========================================================================
+   2. MAIN LAYOUT (CENTERED CONTENT)
+   ========================================================================== */
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 85%; /* Leaves space for the bottom dock */
+    width: 100%;
+    text-align: center;
+}
+
+.clock-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Space between Clock and Quote */
+}
+
+
+/* ==========================================================================
+   3. CLOCK TYPOGRAPHY (THE FIX)
+   ========================================================================== */
+/* Wrapper: Holds Main Time (Left) and Sub-Info (Right) */
+#clock-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline; /* Aligns text to the bottom baseline */
+    justify-content: center;
+    line-height: 1;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    user-select: none;
+}
+
+/* The Big Numbers (Hours:Minutes) */
+#clock-main {
+    font-size: 8rem;
+    font-weight: 700;
+}
+
+/* The Small Info (Seconds & AM/PM) */
+#clock-sub {
+    display: flex;
+    flex-direction: row; /* FIX: Puts Seconds and PM side-by-side */
+    align-items: baseline;
+    gap: 15px; /* Space between Seconds and AM/PM */
+    margin-left: 20px; /* Space between Minutes and Seconds */
+}
+
+#clock-seconds, 
+#clock-ampm {
+    font-size: 2.5rem; /* Smaller font size */
+    opacity: 0.8;      /* Slightly transparent */
+    font-weight: 400;
+}
+
+/* The Quote */
+#greeting {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin: 0; 
+    opacity: 0.9;
+    max-width: 700px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    min-height: 1.5em; /* Prevents jumping layout when quote loads */
+}
+
+
+/* ==========================================================================
+   4. SEARCH BAR
+   ========================================================================== */
+.search-container {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Glassmorphism Wrapper */
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 12px 25px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 50px; /* Fully rounded pill shape */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Hover/Focus Effect */
+.search-wrapper:focus-within,
+.search-wrapper:hover {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+#search-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    opacity: 0.9;
+    border-radius: 4px;
+}
+
+#search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 1.1rem;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+}
+
+#search-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* ==========================================================================
+   5. BOTTOM SHORTCUTS DOCK
+   ========================================================================== */
+.shortcuts-container {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 25px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 15px 30px;
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.shortcut-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    width: 60px;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.shortcut-item:hover {
+    transform: translateY(-8px) scale(1.1);
+}
+
+.shortcut-icon {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 1.5rem;
+}
+
+.shortcut-icon img {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+}
+
+.shortcut-label {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+
+/* ==========================================================================
+   6. SETTINGS PANEL (SIDEBAR)
+   ========================================================================== */
+#settings-btn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: background 0.2s;
+    font-weight: 500;
+}
+
+#settings-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+#settings-panel {
+    position: absolute;
+    top: 80px;
+    right: 25px;
+    background: rgba(15, 15, 15, 0.95); /* Deep dark background */
+    padding: 25px;
+    border-radius: 16px;
+    width: 340px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 100;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Categories */
+.settings-category {
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 20px;
+}
+
+.settings-category:last-of-type {
+    border-bottom: none;
+}
+
+h4 {
+    margin: 0 0 15px 0;
+    font-size: 0.75rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+/* Background Grid */
+#bg-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-height: 160px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #666; }
+
+.bg-thumb {
+    width: 100%;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    opacity: 0.6;
+    transition: all 0.2s;
+}
+
+.bg-thumb:hover { opacity: 1; transform: scale(1.02); }
+.bg-thumb.selected { border-color: #00ff88; opacity: 1; }
+
+/* Buttons & Inputs */
+.secondary-btn, select, #close-btn {
+    width: 100%;
+    padding: 12px;
+    background: #252525;
+    color: white;
+    border: 1px solid #333;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    margin-bottom: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.secondary-btn:hover, select:hover {
+    background: #333;
+}
+
+#close-btn {
+    background: white;
+    color: black;
+    border: none;
+    font-weight: 700;
+    margin-top: 10px;
+}
+#close-btn:hover {
+    background: #ddd;
+}
+
+
+/* ==========================================================================
+   7. TOGGLE SWITCHES
+   ========================================================================== */
+.toggle-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #252525;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.toggle-label {
+    font-size: 0.9rem;
+    color: #eee;
+}
+
+/* Disabled State (Greyed Out) */
+.toggle-row.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    filter: grayscale(100%);
+}
+
+/* Switch UI */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #555;
+    transition: .3s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+}
+
+input:checked + .slider { background-color: #4CAF50; } /* Green Active */
+input:checked + .slider:before { transform: translateX(22px); }
+
+
+/* ==========================================================================
+   8. FOOTER CREDIT
+   ========================================================================== */
+.footer-credit {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.75rem;
+    color: #777;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+.footer-credit a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 600;
+}
+
+.footer-credit a:hover {
+    color: white;
+    text-decoration: underline;
+}

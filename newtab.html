@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Tab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,400&family=Lato:wght@300;400;700&family=Oswald:wght@400;700&family=Raleway:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-container" id="bg"></div>
+    
+    <button id="settings-btn">⚙️ Customize</button>
+
+    <div id="settings-panel" class="hidden">
+        <h3>Dashboard Settings</h3>
+        
+        <div class="settings-category">
+            <h4>Background</h4>
+            <input type="file" id="custom-file-input" accept="image/*" style="display: none;">
+            <button id="upload-btn" class="secondary-btn">📂 Upload from PC</button>
+            <div id="bg-grid"></div>
+        </div>
+
+        <div class="settings-category">
+            <h4>Search Engine</h4>
+            <select id="search-engine-selector">
+                <option value="google">Google</option>
+                <option value="duckduckgo">DuckDuckGo</option>
+                <option value="yahoo">Yahoo</option>
+                <option value="yandex">Yandex</option>
+            </select>
+        </div>
+
+        <div class="settings-category">
+            <h4>Clock Customization</h4>
+            <label style="color: #888; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">Font Style:</label>
+            <select style="margin-top: 10px;" id="font-selector"></select>
+            
+            <div class="toggle-group">
+                <div class="toggle-row">
+                    <span class="toggle-label">Use 24-Hour Clock</span>
+                    <label class="switch">
+                        <input type="checkbox" id="time-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Show Seconds</span>
+                    <label class="switch">
+                        <input type="checkbox" id="seconds-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="toggle-row" id="ampm-row">
+                    <span class="toggle-label">Show AM/PM</span>
+                    <label class="switch">
+                        <input type="checkbox" id="ampm-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <button id="close-btn">Done</button>
+
+        <div class="footer-credit">
+            Made with ❤️ by <a href="https://github.com/DevAyu-Codes/" target="_blank">Ayu Kashyap</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="clock-container">
+            <div id="clock-wrapper">
+                <span id="clock-main">00:00</span>
+                <div id="clock-sub">
+                    <span id="clock-seconds">00</span>
+                    <span id="clock-ampm">PM</span>
+                </div>
+            </div>
+            <h2 id="greeting">Loading...</h2>
+        </div>
+
+        <div class="search-container">
+            <div class="search-wrapper">
+                <img id="search-icon" src="" alt="icon">
+                <input type="text" id="search-input" placeholder="Search..." autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <div class="shortcuts-container" id="shortcuts-dock"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
