@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "AyuPage",
-  "version": "1.2",
+  "version": "1.4",
   "description": "Be your own customizer. ❤️",
   "icons": {
     "16": "resources/icon16.png",
@@ -10,6 +10,9 @@
   },
   "chrome_url_overrides": {
     "newtab": "newtab.html"
+  },
+  "chrome_settings_overrides": {
+    "homepage": "newtab.html"
   },
   "permissions": [
     "storage"

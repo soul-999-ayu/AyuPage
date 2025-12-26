@@ -295,8 +295,18 @@ async function fetchQuote() {
     try {
         const res = await fetch('https://dummyjson.com/quotes/random');
         const data = await res.json();
-        greetingEl.textContent = `“${data.quote}”`;
-    } catch (e) { greetingEl.textContent = "“Make it work, make it right, make it fast.”"; }
+        
+        let quoteText = data.quote;
+
+        // Force Sentence Case for EVERYTHING
+        // This fixes ALL CAPS and Title Case
+        let lower = quoteText.toLowerCase();
+        quoteText = lower.charAt(0).toUpperCase() + lower.slice(1);
+
+        greetingEl.textContent = `“${quoteText}”`;
+    } catch (e) {
+        greetingEl.textContent = "“Simplicity is the soul of efficiency.”";
+    }
 }
 
 // --- INIT ---
